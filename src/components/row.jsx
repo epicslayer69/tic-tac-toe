@@ -3,9 +3,6 @@ import styled from "styled-components";
 
 import Cell from "./cell";
 
-import cross from "../img/cross-img.svg";
-import circle from "../img/circle-img.svg";
-
 const RowSC = styled.tr`
   th {
     background-color: palegreen;
@@ -21,36 +18,23 @@ const RowSC = styled.tr`
     border-style: groove;
   }
 `;
+
+
+const renderPlayableCells = () => {
+  const rows = [];
+  for (let i = 1; i <= 26; i = i + 1) {
+    rows.push(<Cell player={'first'} />);
+  }
+  return rows;
+};
+
+
 export default (props) => {
   return (
     <RowSC>
         <th>{props.name}</th>
         <Cell />
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        {renderPlayableCells()}
         <th>{props.name}</th>
     </RowSC>
   );
