@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import './App.scss';
+import './reset.css';
+import LeftSideWrapper from './components/left-side-wrapper';
+import RightSideWrapper from './components/right-side-wrapper';
 
 function App() {
+  console.log('Tu nam zbehne inicializacny kod');
+  console.log('Nastavi sa meno Hracov, Peder a Adolf');
+
+  const firstPlayerName = 'Peder';
+  const secondPlayerName = 'Adolf';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-wrapper">
+      <LeftSideWrapper />
+      <RightSideWrapper firstPlayerName={firstPlayerName} secondPlayerName={secondPlayerName} />
     </div>
   );
 }
