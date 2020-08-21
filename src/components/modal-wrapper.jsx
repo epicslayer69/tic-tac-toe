@@ -21,26 +21,45 @@ const InputSC = styled.input`
   outline: none;
 `;
 
+
+
+const handleUsernameInputChange = () => {
+
+}
+
+const handleSubmitBtnClick = () => {
+
+}
+
 export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
+  const [username, setUsername] = useState();
+  const [errState, setErrState] = useState(false);
+  
+  
+  
   return (
     <ModalWrapperSC>
       <Modal
         isOpen={modalIsOpen}
         style={{
           overlay: {
-            backgroundColor: "palegreen",
+            background: "rgba(0,0,0,0.85)",
           },
           content: {
             border: "2px solid green",
             color: "green",
+            maxWidth: '500px',
+            maxHeight: '300px',
+            margin: '0 auto'
           },
         }}
       >
-        <h2>Hey!</h2>
-        <h4>Enter your username:</h4>
-        <InputSC type="text" id="username" placeholder="Username" />
+        <h2>Wanna play a game?</h2>
+        <h4>Write me your username:</h4>
+        <InputSC type="text" placeholder="Username" />
+        { /* tu treba dopisat ze ak je error state, tak sa vypise ten error */ }
         <ButtonSC onClick={() => setModalIsOpen(false)}>submit</ButtonSC>
       </Modal>
     </ModalWrapperSC>
