@@ -19,23 +19,21 @@ const RowSC = styled.tr`
   }
 `;
 
-
 const renderPlayableCells = () => {
   const rows = [];
   for (let i = 1; i <= 26; i = i + 1) {
-    rows.push(<Cell player={'first'} />);
+    rows.push(<Cell player={"first"} />);
   }
   return rows;
 };
 
-
 export default (props) => {
   return (
     <RowSC>
-        <th>{props.name}</th>
-        <Cell />
-        {renderPlayableCells()}
-        <th>{props.name}</th>
+      <th>{props.name}</th>
+      <Cell />
+      {renderPlayableCells()}
+      <th>{props.name}</th>
     </RowSC>
   );
 };

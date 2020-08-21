@@ -22,7 +22,7 @@ const RightSideWrapperSC = styled.div`
   }
 
   .joe-mamma {
-    margin-top: 30px
+    margin-top: 30px;
   }
 
   .joe-mamma-img {
@@ -55,11 +55,7 @@ export default (props) => {
         <div class="joe-mamma">
           <h1>{props.secondPlayerName}</h1>
         </div>
-        <img 
-          src={JoeMamma} 
-          alt="JoeMamma" 
-          class="joe-mamma-img" 
-        />
+        <img src={JoeMamma} alt="JoeMamma" class="joe-mamma-img" />
       </div>
     </RightSideWrapperSC>
   );

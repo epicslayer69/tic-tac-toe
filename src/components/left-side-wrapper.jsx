@@ -12,7 +12,6 @@ const LeftSideWrapperSC = styled.div`
     height: 16px;
     text-align: center;
   }
-
 `;
 
 const generateAlphabetRow = () => {

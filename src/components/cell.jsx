@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
@@ -39,7 +39,7 @@ const Cell = (props) => {
 
   const { player } = props;
 
-  const fillingType = (player === "first") ? "cross" : "circle";
+  const fillingType = player === "first" ? "cross" : "circle";
 
   return (
     <CellSC onClick={() => setFill(fillingType)}>{resolveFilling(fill)}</CellSC>
@@ -47,7 +47,7 @@ const Cell = (props) => {
 };
 
 Cell.propTypes = {
-  player: PropTypes.string
-}
+  player: PropTypes.string,
+};
 
 export default Cell;
