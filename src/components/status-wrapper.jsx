@@ -16,7 +16,7 @@ export default () => {
     <StatusWrapperSC>
       <div class="status">
         <h2>
-          Game sarted <br />
+          Game sarted! <br />
         </h2>
       </div>
     </StatusWrapperSC>

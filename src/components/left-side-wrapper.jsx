@@ -9,7 +9,7 @@ const LeftSideWrapperSC = styled.div`
   th {
     background-color: palegreen;
     width: 32px;
-    height: 16px;
+    height: 32px;
     text-align: center;
   }
 `;

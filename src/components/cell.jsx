@@ -10,15 +10,13 @@ const CellSC = styled.td`
   td {
     background-color: white;
     width: 32px;
-    height: 16px;
+    height: 32px;
     border-style: groove;
   }
 
   img {
-    width: 16px;
-    height: 16px;
-    margin-bottom: 3px;
-    margin-left: 3px;
+    width: 32px;
+    height: 32px;
   }
 `;
 
