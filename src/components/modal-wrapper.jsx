@@ -3,12 +3,18 @@ import styled from "styled-components";
 import Modal from "react-modal";
 import { StateContext } from "../context/context";
 
-const ModalWrapperSC = styled.div``;
+const ModalWrapperSC = styled.div`
+  .error-msg {
+    color: red;
+    display: block;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+`;
 
 const ButtonSC = styled.button`
   background: palegreen;
   border: 1px solid green;
-  border-left: 0px;
   color: black;
   padding: 4px 16px;
   outline: 0 !important;
@@ -40,25 +46,38 @@ export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
   const [usernameInputValue, setUsernameInputValue] = useState(null);
+  const [isError, setIsError] = useState(false);
   const { setUsername } = useContext(StateContext);
 
+  const handleButtonClick = () => {
+
+    // if username is empty, show error (mark error flag)
+    if (!usernameInputValue) {
+      setIsError(true);
+      return;
+    }
+
+    setUsername(usernameInputValue);
+    setModalIsOpen(false);
+  };
+
   return (
-    <ModalWrapperSC>
-      <Modal
-        isOpen={modalIsOpen}
-        style={{
-          overlay: {
-            background: "rgba(0,0,0,0.85)",
-          },
-          content: {
-            border: "3px solid green",
-            color: "green",
-            maxWidth: "500px",
-            maxHeight: "300px",
-            margin: "0 auto",
-          },
-        }}
-      >
+    <Modal
+      isOpen={modalIsOpen}
+      style={{
+        overlay: {
+          background: "rgba(0,0,0,0.85)",
+        },
+        content: {
+          border: "3px solid green",
+          color: "green",
+          maxWidth: "500px",
+          maxHeight: "300px",
+          margin: "0 auto",
+        },
+      }}
+    >
+      <ModalWrapperSC>
         <h2>Wanna play a game of tictactoe?</h2>
         <h3>Write me your username:</h3>
         <InputSC
@@ -68,16 +87,9 @@ export default () => {
           value={usernameInputValue}
           onChange={(e) => setUsernameInputValue(e.target.value)}
         />
-        <ButtonSC
-          onClick={() => {
-            setUsername(usernameInputValue);
-            setModalIsOpen(false);
-            //handleOnClickBtnError
-          }}
-        >
-          submit
-        </ButtonSC>
-      </Modal>
-    </ModalWrapperSC>
+        {isError ? <span className="error-msg">Username must be defined</span> : null }
+        <ButtonSC onClick={() => handleButtonClick()}>Submit</ButtonSC>
+      </ModalWrapperSC>
+    </Modal>
   );
 };
