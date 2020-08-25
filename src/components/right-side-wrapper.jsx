@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+
+
 
 import EpicSlayer69 from "../img/epic-slayer-69-img.png";
 import JoeMamma from "../img/joe-mamma-img.png";
 import StatusWrapper from "./status-wrapper";
+import { StateContext } from "../context";
 
 const RightSideWrapperSC = styled.div`
   .information {
@@ -38,13 +41,14 @@ const RightSideWrapperSC = styled.div`
 `;
 
 export default (props) => {
-  console.log("Props");
+
+  const { username } = useContext(StateContext);
 
   return (
     <RightSideWrapperSC>
       <div class="information">
         <div class="epic-slayer-69">
-          <h1>{props.firstPlayerName}</h1>
+          <h1>{username ? username : ''}</h1>
           <img
             src={EpicSlayer69}
             alt="EpicSlayer69"

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+
+import { StateContext } from "../context/context";
 
 const ModalWrapperSC = styled.div``;
 
@@ -24,16 +26,12 @@ const InputSC = styled.input`
   outline: none;
 `;
 
-const handleUsernameInputChange = () => {
-};
-
-const handleSubmitBtnClick = () => {
-};
-
 export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
-  const [username, setUsername] = useState();
+  const [usernameInputValue, setUsernameInputValue] = useState(null);
+  const  { setUsername } = useContext(StateContext);
+
   const [errState, setErrState] = useState(false);
 
   return (
@@ -59,10 +57,17 @@ export default () => {
           type="text"
           maxLength="12"
           placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.value)}
+          value={usernameInputValue}
+          onChange={(e) => setUsernameInputValue(e.target.value)}
         />
-        <ButtonSC onClick={() => setModalIsOpen(false)}>submit</ButtonSC> 
+        <ButtonSC
+          onClick={() => {
+            setUsername(usernameInputValue);
+            setModalIsOpen(false);
+          }}
+        >
+          submit
+        </ButtonSC>
       </Modal>
     </ModalWrapperSC>
   );
