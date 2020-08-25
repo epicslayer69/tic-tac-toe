@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
-
 import { StateContext } from "../context/context";
 
 const ModalWrapperSC = styled.div``;
@@ -26,13 +25,22 @@ const InputSC = styled.input`
   outline: none;
 `;
 
+// const handleOnClickBtnError = () => {
+//   try {
+//     if ({usernameInputValue} == "") throw "You need to type in an username!";
+//   } catch (err) {
+//     <p> {err} </p>;
+//   } finally {
+//     setUsername(setUsernameInputValue);
+//     setModalIsOpen(false);
+//   }
+// };
+
 export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
   const [usernameInputValue, setUsernameInputValue] = useState(null);
-  const  { setUsername } = useContext(StateContext);
-
-  const [errState, setErrState] = useState(false);
+  const { setUsername } = useContext(StateContext);
 
   return (
     <ModalWrapperSC>
@@ -64,6 +72,7 @@ export default () => {
           onClick={() => {
             setUsername(usernameInputValue);
             setModalIsOpen(false);
+            //handleOnClickBtnError
           }}
         >
           submit
