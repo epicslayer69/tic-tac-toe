@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
-import { StateContext } from "../context/context";
+import { StateContext, GS_ENTER_NAME } from "../context/context";
 
 const ModalWrapperSC = styled.div`
   .error-msg {
@@ -33,15 +33,48 @@ const InputSC = styled.input`
   outline: none;
 `;
 
+const renderModalContent = (
+  currentGameState,
+  usernameInputValue,
+  setUsernameInputValue,
+  handleButtonClick,
+  isError
+) => {
+
+
+  const enterNameContent = (
+    <div>
+      <h2>Wanna play a game of tictactoe?</h2>
+      <h3>Enter your username:</h3>
+      <InputSC
+        type="text"
+        maxLength="12"
+        placeholder="Username"
+        value={usernameInputValue}
+        onChange={(e) => setUsernameInputValue(e.target.value)}
+      />
+      <ButtonSC onClick={() => handleButtonClick()}>Submit</ButtonSC>
+      <div>
+        {isError ? (
+          <span className="error-msg">You must enter a username!</span>
+        ) : null}
+      </div>
+    </div>
+  );
+
+ 
+
+
+  if (currentGameState === GS_ENTER_NAME) return enterNameContent;
+};
+
 export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
-
   const [usernameInputValue, setUsernameInputValue] = useState(null);
   const [isError, setIsError] = useState(false);
-  const { setUsername } = useContext(StateContext);
+  const { setUsername, currentGameState } = useContext(StateContext);
 
   const handleButtonClick = () => {
-
     if (!usernameInputValue) {
       setIsError(true);
       return;
@@ -68,17 +101,15 @@ export default () => {
       }}
     >
       <ModalWrapperSC>
-        <h2>Wanna play a game of tictactoe?</h2>
-        <h3>Enter your username:</h3>
-        <InputSC
-          type="text"
-          maxLength="12"
-          placeholder="Username"
-          value={usernameInputValue}
-          onChange={(e) => setUsernameInputValue(e.target.value)}
-        />
-        <ButtonSC onClick={() => handleButtonClick()}>Submit</ButtonSC>
-        {isError ? <span className="error-msg">You must enter a username!</span> : null }
+        {
+          renderModalContent(
+            currentGameState,
+            usernameInputValue,
+            setUsernameInputValue,
+            handleButtonClick,
+            isError
+          )
+        }
       </ModalWrapperSC>
     </Modal>
   );
