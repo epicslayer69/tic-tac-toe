@@ -15,7 +15,7 @@ const RowSC = styled.tr`
     background-color: white;
     width: 32px;
     height: 32px;
-    border-style: groove;
+    border: 1px solid gray;
   }
 `;
 
@@ -31,7 +31,6 @@ export default (props) => {
   return (
     <RowSC>
       <th>{props.name}</th>
-      <Cell />
       {renderPlayableCells()}
       <th>{props.name}</th>
     </RowSC>

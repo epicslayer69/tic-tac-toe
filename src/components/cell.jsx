@@ -7,13 +7,6 @@ import svgCrossImg from "../img/cross-img.svg";
 import svgCircleImg from "../img/circle-img.svg";
 
 const CellSC = styled.td`
-  td {
-    background-color: white;
-    width: 32px;
-    height: 32px;
-    border-style: groove;
-  }
-
   img {
     width: 32px;
     height: 32px;

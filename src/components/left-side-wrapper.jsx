@@ -7,7 +7,7 @@ import Row from "./row";
 
 const LeftSideWrapperSC = styled.div`
   th {
-    background-color: palegreen;
+    background-color: lightgreen;
     width: 32px;
     height: 32px;
     text-align: center;

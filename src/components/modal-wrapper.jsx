@@ -8,13 +8,15 @@ const ModalWrapperSC = styled.div`
     color: red;
     display: block;
     font-size: 12px;
-    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-top: 5px;
   }
 `;
 
 const ButtonSC = styled.button`
   background: palegreen;
   border: 1px solid green;
+  border-left: none;
   color: black;
   padding: 4px 16px;
   outline: 0 !important;
@@ -31,17 +33,6 @@ const InputSC = styled.input`
   outline: none;
 `;
 
-// const handleOnClickBtnError = () => {
-//   try {
-//     if ({usernameInputValue} == "") throw "You need to type in an username!";
-//   } catch (err) {
-//     <p> {err} </p>;
-//   } finally {
-//     setUsername(setUsernameInputValue);
-//     setModalIsOpen(false);
-//   }
-// };
-
 export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
@@ -51,7 +42,6 @@ export default () => {
 
   const handleButtonClick = () => {
 
-    // if username is empty, show error (mark error flag)
     if (!usernameInputValue) {
       setIsError(true);
       return;
@@ -79,7 +69,7 @@ export default () => {
     >
       <ModalWrapperSC>
         <h2>Wanna play a game of tictactoe?</h2>
-        <h3>Write me your username:</h3>
+        <h3>Enter your username:</h3>
         <InputSC
           type="text"
           maxLength="12"
@@ -87,8 +77,8 @@ export default () => {
           value={usernameInputValue}
           onChange={(e) => setUsernameInputValue(e.target.value)}
         />
-        {isError ? <span className="error-msg">Username must be defined</span> : null }
         <ButtonSC onClick={() => handleButtonClick()}>Submit</ButtonSC>
+        {isError ? <span className="error-msg">You must enter a username!</span> : null }
       </ModalWrapperSC>
     </Modal>
   );

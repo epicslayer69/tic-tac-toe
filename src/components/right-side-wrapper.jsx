@@ -8,7 +8,7 @@ import { StateContext } from "../context";
 
 const RightSideWrapperSC = styled.div`
   .information {
-    margin: 30px 100px;
+    margin: 90px 100px;
   }
 
   .first-player {
@@ -54,7 +54,7 @@ export default (props) => {
         </div>
         <StatusWrapper />
         <div class="second-player">
-          <h1>{props.secondPlayerName}</h1>
+          <h1>{username ? username : ""}</h1>
         </div>
         <img src={SedondPlayerImg} alt="Second Player" class="second-player-img" />
       </div>
