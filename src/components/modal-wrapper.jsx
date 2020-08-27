@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
-import { StateContext, GS_ENTER_NAME } from "../context/context";
+import { StateContext, GS_ENTER_NAME, GS_WAITING_FOR_OPPONENT, GS_GAME_RUNNING, GS_YOU_WON, GS_YOU_LOST  } from "../context/context";
 
 const ModalWrapperSC = styled.div`
   .error-msg {
@@ -38,10 +38,9 @@ const renderModalContent = (
   usernameInputValue,
   setUsernameInputValue,
   handleButtonClick,
+  setModalIsOpen,
   isError
 ) => {
-
-
   const enterNameContent = (
     <div>
       <h2>Wanna play a game of tictactoe?</h2>
@@ -62,17 +61,35 @@ const renderModalContent = (
     </div>
   );
 
- 
+  const waitingForOpponentContent = (
+    <div>
+      <h2>Waiting for opponent ...</h2>
+      <h3>Please wait</h3>
+    </div>
+  );
 
+  const youWonContent = (
+    <div>
+      <h2>Congratulations {usernameInputValue}, you won!</h2>
+    </div>
+  );
+
+  const youLostContent = (
+    <div>
+      <h2>Im sorry {usernameInputValue}, you lost!</h2>
+      <h3>Try luck next time</h3>
+    </div>
+  );
 
   if (currentGameState === GS_ENTER_NAME) return enterNameContent;
+  if (currentGameState === GS_WAITING_FOR_OPPONENT) return waitingForOpponentContent;
 };
 
 export default () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [usernameInputValue, setUsernameInputValue] = useState(null);
   const [isError, setIsError] = useState(false);
-  const { setUsername, currentGameState } = useContext(StateContext);
+  const { setUsername, currentGameState, setCurrentGameState } = useContext(StateContext);
 
   const handleButtonClick = () => {
     if (!usernameInputValue) {
@@ -81,8 +98,10 @@ export default () => {
     }
 
     setUsername(usernameInputValue);
-    setModalIsOpen(false);
+    setCurrentGameState(GS_WAITING_FOR_OPPONENT);
   };
+
+  if (currentGameState === GS_GAME_RUNNING) return null;
 
   return (
     <Modal
@@ -101,15 +120,14 @@ export default () => {
       }}
     >
       <ModalWrapperSC>
-        {
-          renderModalContent(
-            currentGameState,
-            usernameInputValue,
-            setUsernameInputValue,
-            handleButtonClick,
-            isError
-          )
-        }
+        {renderModalContent(
+          currentGameState,
+          usernameInputValue,
+          setUsernameInputValue,
+          handleButtonClick,
+          setModalIsOpen,
+          isError
+        )}
       </ModalWrapperSC>
     </Modal>
   );

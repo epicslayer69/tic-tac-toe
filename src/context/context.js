@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 export const GS_ENTER_NAME = 'gs_enter_name';
-export const GS_WAITING_FOR_OPONENT = 'gs_waiting_for_oponent';
+export const GS_WAITING_FOR_OPPONENT = 'gs_waiting_for_opponent';
 export const GS_GAME_RUNNING = 'gs_game_running';
 export const GS_YOU_WON = 'gs_you_won';
 export const GS_YOU_LOST = 'gs_you_lost';

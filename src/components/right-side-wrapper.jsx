@@ -38,14 +38,14 @@ const RightSideWrapperSC = styled.div`
   }
 `;
 
-export default (props) => {
+export default () => {
   const { username } = useContext(StateContext);
 
   return (
     <RightSideWrapperSC>
       <div class="information">
         <div class="first-player">
-          <h1>{username ? username : ""}</h1>
+          <h1>{username ? username : ""} | ✘</h1>
           <img
             src={FirstPlayerImg}
             alt="First Player"
@@ -54,7 +54,7 @@ export default (props) => {
         </div>
         <StatusWrapper />
         <div class="second-player">
-          <h1>{username ? username : ""}</h1>
+          <h1>{username ? username : ""} | ❍</h1>
         </div>
         <img src={SedondPlayerImg} alt="Second Player" class="second-player-img" />
       </div>
