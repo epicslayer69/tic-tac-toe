@@ -1,14 +1,16 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+import { ioSocket } from "../context";
+
 import {
   StateContext,
   GS_ENTER_NAME,
   GS_WAITING_FOR_OPPONENT,
   GS_GAME_RUNNING,
-  GS_YOU_WON,
   GS_YOU_LOST,
-} from "../context";
+  GS_YOU_WON,
+} from "../context/context";
 
 const ModalWrapperSC = styled.div`
   .error-msg {
@@ -45,7 +47,6 @@ const renderModalContent = (
   usernameInputValue,
   setUsernameInputValue,
   handleButtonClick,
-  setModalIsOpen,
   isError
 ) => {
   const enterNameContent = (
@@ -93,21 +94,25 @@ const renderModalContent = (
     return waitingForOpponentContent;
 };
 
-export default () => {
+export default React.memo(() => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [usernameInputValue, setUsernameInputValue] = useState(null);
   const [isError, setIsError] = useState(false);
-  const { setUsername, currentGameState, setCurrentGameState } = useContext(
-    StateContext
-  );
+
+  const { setUsername, currentGameState, setCurrentGameState } = useContext(StateContext);
+  console.info("[RENDERING] Modal");
 
   const handleButtonClick = () => {
     if (!usernameInputValue) {
       setIsError(true);
       return;
     }
-
+    // set username into local context
     setUsername(usernameInputValue);
+    // set username on server
+    ioSocket.emit("set.name", { name: usernameInputValue });
+
+    setModalIsOpen(false);
     setCurrentGameState(GS_WAITING_FOR_OPPONENT);
   };
 
@@ -116,6 +121,7 @@ export default () => {
   return (
     <Modal
       isOpen={modalIsOpen}
+      ariaHideApp={false}
       style={{
         overlay: {
           background: "rgba(0,0,0,0.85)",
@@ -135,10 +141,9 @@ export default () => {
           usernameInputValue,
           setUsernameInputValue,
           handleButtonClick,
-          setModalIsOpen,
           isError
         )}
       </ModalWrapperSC>
     </Modal>
   );
-};
+});

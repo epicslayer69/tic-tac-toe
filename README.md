@@ -1,3 +1,12 @@
+# Tic Tac Toe by Alex
+
+## Server
+
+Runs at 8080 port.
+Server - manages clients only in memory, there is no backend. Everythings clears of as the process restarts.
+
+## Client
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
