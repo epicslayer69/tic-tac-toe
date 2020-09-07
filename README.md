@@ -1,5 +1,11 @@
 # Tic Tac Toe by Alex
 
+## TODO
+- other player disconnected
+- refactor to redux
+- re-rendering issues
+- no security at all, server doesnt handles player moves
+
 ## Server
 
 Runs at 8080 port.

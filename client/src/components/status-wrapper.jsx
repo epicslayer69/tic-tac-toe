@@ -14,7 +14,7 @@ const StatusWrapperSC = styled.div`
 export default () => {
   return (
     <StatusWrapperSC>
-      <div class="status">
+      <div className="status">
         <h2>
           Game sarted! <br />
         </h2>

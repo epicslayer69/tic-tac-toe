@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import FirstPlayerImg from "../img/first-player-img.png";
-import SedondPlayerImg from "../img/second-player-img.png";
+import SecondPlayerImg from "../img/second-player-img.png";
 import StatusWrapper from "./status-wrapper";
-import { StateContext } from "../context";
 
 const RightSideWrapperSC = styled.div`
   .information {
@@ -38,25 +38,41 @@ const RightSideWrapperSC = styled.div`
   }
 `;
 
-export default (props) => {
-  const { username } = useContext(StateContext);
+export default () => {
+  const playerUsername = useSelector((state) => state.playerUsername);
+  const opponentUsername = useSelector((state) => state.opponentUsername);
+
+  const mySymbol = useSelector((state) => state.playerSymbol);
+  const opSymbol = useSelector((state) => state.opponentSymbol);
 
   return (
     <RightSideWrapperSC>
-      <div class="information">
-        <div class="first-player">
-          <h1>{username ? username : ""}</h1>
+      <div className="information">
+        <div className="first-player">
+          <h1>
+            {playerUsername
+              ? `${playerUsername}${mySymbol ? ' - ' + mySymbol : ""}`
+              : ""}
+          </h1>
           <img
             src={FirstPlayerImg}
             alt="First Player"
-            class="first-player-img"
+            className="first-player-img"
           />
         </div>
         <StatusWrapper />
-        <div class="second-player">
-          <h1>{username ? username : ""}</h1>
+        <div className="second-player">
+          <h1>
+            {opponentUsername
+              ? `${opponentUsername} ${opSymbol ? ' - ' + opSymbol : ""}`
+              : ""}
+          </h1>
         </div>
-        <img src={SedondPlayerImg} alt="Second Player" class="second-player-img" />
+        <img
+          src={SecondPlayerImg}
+          alt="Second Player"
+          className="second-player-img"
+        />
       </div>
     </RightSideWrapperSC>
   );

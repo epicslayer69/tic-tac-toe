@@ -17,7 +17,7 @@ const LeftSideWrapperSC = styled.div`
 const generateAlphabetRow = () => {
   const alphabet = [];
   for (let i = 65; i < 91; i = i + 1) {
-    alphabet.push(<th>{String.fromCharCode(i)}</th>);
+    alphabet.push(<th key={i}>{String.fromCharCode(i)}</th>);
   }
   return alphabet;
 };
@@ -35,7 +35,7 @@ const renderAlphabetRow = () => {
 const renderPlayableRows = () => {
   const rows = [];
   for (let i = 1; i <= 26; i = i + 1) {
-    rows.push(<Row name={i} />);
+    rows.push(<Row name={i} key={i} />);
   }
   return rows;
 };
@@ -44,9 +44,11 @@ export default () => {
   return (
     <LeftSideWrapperSC>
       <table>
-        {renderAlphabetRow()}
-        {renderPlayableRows()}
-        {renderAlphabetRow()}
+        <tbody>
+          {renderAlphabetRow()}
+          {renderPlayableRows()}
+          {renderAlphabetRow()}
+        </tbody>
       </table>
     </LeftSideWrapperSC>
   );

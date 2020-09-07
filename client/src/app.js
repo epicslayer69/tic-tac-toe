@@ -1,13 +1,14 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 
 import './reset.css';
 import './app.scss';
 
-import StateProvider from './context/context';
 import AppWrapper from './app-wrapper';
+import store from './redux';
 
 export default () => (
-    <StateProvider>
+  <Provider store={store}>
       <AppWrapper />
-    </StateProvider>
-  );
+  </Provider>
+);

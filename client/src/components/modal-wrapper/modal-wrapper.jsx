@@ -1,51 +1,28 @@
-import React, { useState, useContext } from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
+
+import { appActionTypes } from "../../redux/store";
+import { ioSocket } from "../../socket";
+
+import ModalWrapperSC, { InputSC, ButtonSC } from "./modal-wrapper.styled";
+
 import {
-  StateContext,
   GS_ENTER_NAME,
   GS_WAITING_FOR_OPPONENT,
-  GS_GAME_RUNNING,
-  GS_YOU_WON,
+  GS_WAITING_FOR_OPPONENT_MOVE,
+  GS_MY_TURN,
   GS_YOU_LOST,
-} from "../context";
+  GS_YOU_WON,
+} from "../../constants";
 
-const ModalWrapperSC = styled.div`
-  .error-msg {
-    color: red;
-    display: block;
-    font-size: 12px;
-    margin-left: 5px;
-    margin-top: 5px;
-  }
-`;
 
-const ButtonSC = styled.button`
-  background: palegreen;
-  border: 1px solid green;
-  border-left: none;
-  color: black;
-  padding: 4px 16px;
-  outline: 0 !important;
-  transition: 0.3s;
-  :hover {
-    background: lightgreen;
-  }
-`;
-
-const InputSC = styled.input`
-  border: 1px solid green;
-  color: black;
-  padding: 4px 16px;
-  outline: none;
-`;
 
 const renderModalContent = (
   currentGameState,
   usernameInputValue,
   setUsernameInputValue,
   handleButtonClick,
-  setModalIsOpen,
   isError
 ) => {
   const enterNameContent = (
@@ -88,34 +65,48 @@ const renderModalContent = (
     </div>
   );
 
+  const waitingForOpponentsMoveContent = (
+    <div>
+      <h2>Wait for opponents move...</h2>
+    </div>
+  );
+
   if (currentGameState === GS_ENTER_NAME) return enterNameContent;
   if (currentGameState === GS_WAITING_FOR_OPPONENT)
     return waitingForOpponentContent;
+  if (currentGameState === GS_YOU_LOST) return youLostContent;
+  if (currentGameState === GS_YOU_WON) return youWonContent;
+  if (currentGameState === GS_WAITING_FOR_OPPONENT_MOVE)
+    return waitingForOpponentsMoveContent;
 };
 
-export default () => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
-  const [usernameInputValue, setUsernameInputValue] = useState(null);
+export default React.memo(() => {
+  const [usernameInputValue, setUsernameInputValue] = useState("");
   const [isError, setIsError] = useState(false);
-  const { setUsername, currentGameState, setCurrentGameState } = useContext(
-    StateContext
-  );
-
+  
+  const dispatch = useDispatch();
+  const currentGameState = useSelector(state => state.currentGameState);
+  
+  const modalIsOpen = currentGameState !== GS_MY_TURN;
+  
   const handleButtonClick = () => {
     if (!usernameInputValue) {
       setIsError(true);
       return;
     }
-
-    setUsername(usernameInputValue);
-    setCurrentGameState(GS_WAITING_FOR_OPPONENT);
+    // set username into local context
+    dispatch({ type: appActionTypes.SET_PLAYER_USERNAME, payload: { playerUsername: usernameInputValue } });
+    // set username on server
+    ioSocket.emit("set.name", { name: usernameInputValue });
+    dispatch({ type: appActionTypes.SET_CURRENT_GAME_STATE, payload: { currentGameState: GS_WAITING_FOR_OPPONENT } });
   };
 
-  if (currentGameState === GS_GAME_RUNNING) return null;
+  if (currentGameState === GS_MY_TURN) return null;
 
   return (
     <Modal
       isOpen={modalIsOpen}
+      ariaHideApp={false}
       style={{
         overlay: {
           background: "rgba(0,0,0,0.85)",
@@ -135,10 +126,9 @@ export default () => {
           usernameInputValue,
           setUsernameInputValue,
           handleButtonClick,
-          setModalIsOpen,
           isError
         )}
       </ModalWrapperSC>
     </Modal>
   );
-};
+});
