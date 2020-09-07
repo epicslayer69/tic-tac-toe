@@ -187,9 +187,10 @@ const checkGameState = (gameId, which) => {
         clients[games[gameId].secondPlayer].socket.emit('game.won');
         clients[games[gameId].firstPlayer].socket.emit('game.lost');
       }
-      return;
+      return false;
     }
   }
+  return true;
 };
 
 /**
@@ -281,10 +282,11 @@ io.on('connection', (socket) => {
 
     if (gameId) {
       console.log('Checking game state');
-      checkGameState(gameId, which, data.cell);
+      // returns true if game should continue;
+      if (checkGameState(gameId, which, data.cell)) {
+        // Emit for the player who made the move
+        opponentsSocket.emit('move.made', { cell: data.cell });
+      }
     }
-
-    // Emit for the player who made the move
-    opponentsSocket.emit('move.made', { cell: data.cell });
   });
 });
